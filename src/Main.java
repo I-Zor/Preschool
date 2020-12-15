@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,24 +16,11 @@ public class Main {
     private DatabaseDAO databaseDAO = d;
     private PersonDAO personDAO = d;
 
+    GUI g = new GUI();
+
     private Scanner scan = new Scanner(System.in);
 
     private States state;
-
-/*
-1. Välj Vårdnadshavare eller Pedagog ex (1,2)
-
-Vårdnadshavare
-1. Välj barn
-1. Registerara frånvaro
-2. Anmäla omsorgstider
-3. Visa pedagogers uppgifter
-
-Pedagog
-1. Lägga till frånvaro
-2. Registrera nytt barn
-
- */
 
 
     public Main() throws InterruptedException {
@@ -44,23 +30,23 @@ Pedagog
         state = States.LOGIN;
         state.output(null);
 
-        int input = scan.nextInt();
+        int input = g.input;
 
 
         while (true) {
             if (input == 1) {
-                Thread.sleep(1000);
+            //    Thread.sleep(1000);
                 caregiverView(input);
                 state = States.LOGIN;
                 state.output(null);
-                input = scan.nextInt();
+            //    input = scan.nextInt();
                 //break;
             } else if (input == 2) {
-                Thread.sleep(1000);
+            //    Thread.sleep(1000);
                 educatorView(input);
                 state = States.LOGIN;
                 state.output(null);
-                input = scan.nextInt();
+            //    input = scan.nextInt();
                 //break;
             } else if (input == 3) {
                 state = States.SHUT_DOWN;
@@ -69,7 +55,7 @@ Pedagog
                 break;
             } else {
                 System.out.println("Ogiltigt kommando, var god försök igen.");
-                input = scan.nextInt();
+            //    input = scan.nextInt();
             }
         }
     }

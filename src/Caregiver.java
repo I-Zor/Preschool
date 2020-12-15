@@ -1,6 +1,3 @@
-
-import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class Caregiver extends Person implements IContactInformation {
 
     public Caregiver(String firstName, String lastName, String personalNumber) {
         super(firstName, lastName, personalNumber);
-        children = new ArrayList<Child>();
+        children = new ArrayList<>();
     }
 
     public void addChildren(Child child){

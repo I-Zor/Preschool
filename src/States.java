@@ -1,24 +1,15 @@
-import javax.xml.crypto.Data;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by Lisa Ramel
- * Date: 2020-12-04
- * Time: 16:27
- * Project: Preeschool
- * Copywrite: MIT
- */
 public enum States {
 
     LOGIN {
         @Override
         public void output(Object o) {
-            System.out.println("Välkommen till förskolan!" + "\nLOGGA IN SOM"
-                    + "\n 1. Vårdnadshavare" + "\n 2. Pedagog" + "\n 3. Avsluta programmet");
+            GUI gui = new GUI();
+            gui.showWelcomeScreen();
         }
     },
 
@@ -109,17 +100,18 @@ public enum States {
             String time = scan.next();
             String start = time.substring(0, time.indexOf(","));
             String stop = time.substring(time.indexOf(",") + 1);
-            child.caringTimes.set(dayNumber, new CaringTime(day, LocalTime.parse(start), LocalTime.parse(stop)));
+            child.getCaringTimes().set(dayNumber, new CaringTime(day, LocalTime.parse(start), LocalTime.parse(stop)));
         }
     },
 
     EDUCATOR_INFO {
         @Override
         public void output(Object o) {
-            List<Educator> educatorList = (List<Educator>) o;
+            Child child = (Child) o;
+            ChildGroup group = child.getChildGroup();
             System.out.println();
             System.out.println("Kontaktuppgifter till pedagogerna:");
-            for (Educator educator : educatorList) {
+            for (Educator educator : group.getResponsibleEducators()) {
                 System.out.println(educator.getFirstName() + " " + educator.getLastName() +
                         "\n" + educator.getEmailAddress() +
                         "\n" + educator.getPhoneNumber());
@@ -141,7 +133,7 @@ public enum States {
                     "\n 6. Logga ut");
         }
     },
-
+//TODO: povezati absence sa listom djece u odredjenoj grupi
     EDUCATOR_ABSENCE {
         @Override
         public void output(Object o) {
@@ -155,7 +147,7 @@ public enum States {
             }
         }
     },
-
+//TODO: povezati administratora sa REGISTER_CHILD
     REGISTER_CHILD {
         @Override
         public void output(Object o) {
@@ -219,7 +211,7 @@ public enum States {
 
 
     },
-
+//TODO:samo za odredjenu grupu ATTENDANCE, PRINT_ALL, PRINT_ABSENT, PRINT_PRESENT
     ATTENDANCE {
         @Override
         public void output(Object o) {
@@ -315,7 +307,7 @@ public enum States {
         @Override
         public void showCaringTimes(Child child) {
             System.out.println("Här är " + child.getFirstName() + "s omsorgstider: ");
-            for (CaringTime ct : child.caringTimes) {
+            for (CaringTime ct : child.getCaringTimes()) {
                 System.out.println(ct.getDay() + ": " + ct.getStart() + " - " + ct.getStop());
             }
         }
@@ -357,7 +349,7 @@ public enum States {
 
     public void showCaringTimes(Child child) {
         System.out.println("Här är " + child.getFirstName() + "s omsorgstider: ");
-        for (CaringTime ct : child.caringTimes) {
+        for (CaringTime ct : child.getCaringTimes()) {
             System.out.println(ct.getDay() + ": " + ct.getStart() + " - " + ct.getStop());
         }
     }

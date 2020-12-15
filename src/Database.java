@@ -8,23 +8,19 @@ import java.util.List;
 public class Database implements AttendanceDAO, Serializable, PersonDAO, DatabaseDAO {
 
 
-    private List<Child> childList = new LinkedList<>();
-    private List<Caregiver> caregiverList = new LinkedList<>();
-    private List<Educator> educatorList = new LinkedList<>();
-    private List<Attendance> attendanceToday = new ArrayList<>();
-    private List<List<Attendance>> attendanceList = new ArrayList<>();
+    private final List<Child> childList;
+    private final List<Caregiver> caregiverList = new LinkedList<>();
+    private final List<Educator> educatorList;
+    private final List<Attendance> attendanceToday = new ArrayList<>();
+    private final List<List<Attendance>> attendanceList = new ArrayList<>();
 
 
     public Database (){
 
         this.childList = deSerialize("Children.ser");
-        //this.caregiverList = deSerialize("Caregivers.ser");
         this.educatorList = deSerialize("Educators.ser");
         findAndAddCAregiver();
         setAttendance();
-
-
-
     }
 
     public void addChild(Child c) {
