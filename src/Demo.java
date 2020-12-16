@@ -30,33 +30,43 @@ public class Demo {
         c1.setEmailAddress("anna.andersson@gmail.com");
         c1.setPhoneNumber("070 222 333 44");
         c1.setPostAddress("Stockholm");
+        c1.setUsername("anna.andersson");
         c2.setEmailAddress("eva.johansson@gmail.com");
         c2.setPhoneNumber("070 333 444 55");
         c2.setPostAddress("Stockholm");
+        c2.setUsername("eva.johansson");
         c3.setEmailAddress("maria.karlsson@gmail.com");
         c3.setPhoneNumber("070 444 555 66");
         c3.setPostAddress("Stockholm");
+        c3.setUsername("maria.karlsson");
         c4.setEmailAddress("karin.nilsson@gmail.com");
         c4.setPhoneNumber("070 555 666 77");
         c4.setPostAddress("Stockholm");
+        c4.setUsername("karin.nilsson");
         c5.setEmailAddress("erik.andersson@gmail.com");
         c5.setPhoneNumber("070 555 666 77");
         c5.setPostAddress("Stockholm");
+        c5.setUsername("erik.andersson");
         c6.setEmailAddress("lars.johansson@gmail.com");
         c6.setPhoneNumber("070 555 666 77");
         c6.setPostAddress("Stockholm");
+        c6.setUsername("lars.johansson");
         c7.setEmailAddress("anders.karlsson@gmail.com");
         c7.setPhoneNumber("070 555 666 77");
+        c7.setUsername("anders.karlsson");
         c7.setPostAddress("Stockholm");
         c8.setEmailAddress("peter.jonsson@gmail.com");
         c8.setPhoneNumber("070 555 666 77");
         c8.setPostAddress("Stockholm");
+        c8.setUsername("peter.jonsson");
         c9.setEmailAddress("ingrid.hansson@gmail.com");
         c9.setPhoneNumber("070 555 666 77");
         c9.setPostAddress("Stockholm");
+        c9.setUsername("ingrid.hansson");
         c10.setEmailAddress("sven.pettersson@gmail.com");
         c10.setPhoneNumber("070 555 666 77");
         c10.setPostAddress("Stockholm");
+        c10.setUsername("sven.pettersson");
 
 
         Child b1 = new Child("Alice","Andersson","201502024785");
@@ -206,10 +216,10 @@ public class Demo {
         b4.addRelative(r4);
         b5.addRelative(r4);
 
-        Relative r5 = new Relative("Ivona","Zoricic");
+        Relative r5 = new Relative("Marijeta","Zoricic");
         r5.addCloseChild(b4);
         r5.setPhoneNumber("0702110492");
-        r5.seteMailAddress("ivona.zoricic@gmail.com");
+        r5.seteMailAddress("marijeta.zoricic@gmail.com");
         r5.setRelationWithChild("Granne");
         r5.addCloseChild(b7);
         r5.addCloseChild(b8);
@@ -225,6 +235,7 @@ public class Demo {
         e1.setPhoneNumber("070 123 45 67");
         e1.setPostAddress("Stockholm");
         e1.setPosition("Förskollärare");
+        e1.setUsername("kristina.eriksson");
 
         Educator e2 = new Educator("Klara","Magnusson","197709092255");
         d.addEducator(e2);
@@ -232,6 +243,7 @@ public class Demo {
         e2.setPhoneNumber("070 334 66 55");
         e2.setPostAddress("Stockholm");
         e2.setPosition("Barnskötare");
+        e2.setUsername("klara.magnusson");
 
         Educator e3 = new Educator("Sofia","Lindberg","198310091155");
         d.addEducator(e3);
@@ -239,6 +251,7 @@ public class Demo {
         e3.setPhoneNumber("070 114 36 35");
         e3.setPostAddress("Stockholm");
         e3.setPosition("Barnskötare");
+        e3.setUsername("sofia.lindberg");
 
         List<Educator> educatorList = d.getEducatorList();
 
@@ -271,6 +284,8 @@ public class Demo {
         b8.setChildGroup(group3);
         b9.setChildGroup(group3);
 
+        Administrator administrator = new Administrator("Ivona", "Zoricic", "198307084445");
+        administrator.setUsername("ivona.zoricic");
 
         d.serialize(childrenList,"Children.ser");
         d.serialize(educatorList,"Educators.ser");

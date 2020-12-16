@@ -13,6 +13,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     private final List<Educator> educatorList;
     private final List<Attendance> attendanceToday = new ArrayList<>();
     private final List<List<Attendance>> attendanceList = new ArrayList<>();
+    private Administrator administrator;
 
 
     public Database (){
@@ -127,21 +128,28 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
 
     public Caregiver getCaregiver(String name){
         for (Caregiver c: caregiverList){
-            if(c.getFirstName().equalsIgnoreCase(name) || c.getLastName().equalsIgnoreCase(name)){
+            if (c.getUsername().equals(name))
                 return c;
             }
-        }
         return null;
-    }
+        }
+
 
     @Override
     public Educator getEducator(String name) {
         for(Educator e: educatorList){
-            if(e.getFirstName().equalsIgnoreCase(name) || e.getLastName().equalsIgnoreCase(name)){
+            if (e.getUsername().equals(name))
                 return e;
             }
-        }
         return null;
+    }
+
+    @Override
+    public Administrator getAdministrator(String name) {
+        if (name.equals(administrator.getUsername()))
+            return administrator;
+        else
+            return null;
     }
 
     @Override

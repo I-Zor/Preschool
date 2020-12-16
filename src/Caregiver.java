@@ -13,6 +13,7 @@ public class Caregiver extends Person implements IContactInformation {
     private String eMailAddress;
     private String phoneNumber;
     private String postAddress;
+    private String username;
     List<Child> children;
 
     public Caregiver(String firstName, String lastName, String personalNumber) {
@@ -65,4 +66,11 @@ public class Caregiver extends Person implements IContactInformation {
         return postAddress;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

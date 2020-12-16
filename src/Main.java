@@ -1,14 +1,11 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by Lisa Ramel
- * Date: 2020-12-04
- * Time: 14:03
- * Project: Preeschool
- * Copywrite: MIT
- */
-public class Main {
+public class Main extends JFrame implements ActionListener {
 
     private final Database d = new Database();
 
@@ -16,7 +13,48 @@ public class Main {
     private DatabaseDAO databaseDAO = d;
     private PersonDAO personDAO = d;
 
-    GUI g = new GUI();
+    JPanel welcomeScreen = new JPanel();
+    JPanel logInScreen = new JPanel();
+    JLabel title = new JLabel("Välkommen till förskolan!");
+    JLabel logInas = new JLabel("Logga in som");
+    JButton caregiver = new JButton("Vårdnadshavare");
+    JButton educator = new JButton("Pedagog");
+    JButton endProgram = new JButton("Avsluta programmet");
+    int input = 0;
+
+    JLabel usernameInput = new JLabel("Skriv ditt namn:");
+    JTextField username = new JTextField();
+
+    public void showWelcomeScreen(){
+        add(welcomeScreen);
+        welcomeScreen.setLayout(new GridLayout(5,1));
+        welcomeScreen.add(title);
+        welcomeScreen.add(logInas);
+        welcomeScreen.add(caregiver);
+        welcomeScreen.add(educator);
+        welcomeScreen.add(endProgram);
+
+        caregiver.addActionListener(this);
+        educator.addActionListener(this);
+        endProgram.addActionListener(this);
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public void showLogInScreen() {
+        add(logInScreen);
+        logInScreen.add(usernameInput, BorderLayout.NORTH);
+        logInScreen.add(username, BorderLayout.CENTER);
+
+        username.addActionListener(this);
+
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
     private Scanner scan = new Scanner(System.in);
 
@@ -24,27 +62,27 @@ public class Main {
 
 
     public Main() throws InterruptedException {
-        state = States.LOGIN;
+   //     state = States.LOGIN;
 
 
-        state = States.LOGIN;
-        state.output(null);
+    //    state.output(null);
 
-        int input = g.input;
+    //    int input = this.input;
+        System.out.println(input);
+//TODO: oändlig loop!!!
 
-
-        while (true) {
+    //    while (true) {
             if (input == 1) {
             //    Thread.sleep(1000);
                 caregiverView(input);
-                state = States.LOGIN;
+            //    state = States.LOGIN;
                 state.output(null);
             //    input = scan.nextInt();
                 //break;
             } else if (input == 2) {
             //    Thread.sleep(1000);
                 educatorView(input);
-                state = States.LOGIN;
+            //    state = States.LOGIN;
                 state.output(null);
             //    input = scan.nextInt();
                 //break;
@@ -52,13 +90,13 @@ public class Main {
                 state = States.SHUT_DOWN;
                 state.output(null);
                 saveAllFiles();
-                break;
+        //        break;
             } else {
                 System.out.println("Ogiltigt kommando, var god försök igen.");
             //    input = scan.nextInt();
             }
         }
-    }
+ //   }
 
 
     public void caregiverView(int input) throws InterruptedException {
@@ -67,11 +105,11 @@ public class Main {
 
         state = States.USERNAME;
         state.output(null);
-        name = scan.next();
+        name = username.getText();
         Caregiver caregiver = personDAO.getCaregiver(name);
         while (caregiver == null) {
             System.out.println("Var god försök igen: ");
-            name = scan.next();
+            name = username.getText();
             caregiver = personDAO.getCaregiver(name);
         }
         while (true) {
@@ -80,7 +118,7 @@ public class Main {
 
             if (caregiver.getChildren().size() > 1) {
 
-                Thread.sleep(1000);
+            //    Thread.sleep(1000);
                 state = States.CAREGIVER;
                 state.output(caregiver);
 
@@ -303,6 +341,19 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         Main main = new Main();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==caregiver)
+            input = 1;
+        else if (e.getSource()==educator)
+            input = 2;
+        else if (e.getSource()==endProgram)
+            input = 3;
+        else if (e.getSource()==username)
+            username.getText();
+
     }
 }
 

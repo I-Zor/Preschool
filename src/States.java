@@ -8,15 +8,17 @@ public enum States {
     LOGIN {
         @Override
         public void output(Object o) {
-            GUI gui = new GUI();
-            gui.showWelcomeScreen();
+            LogInScreen logInScreen = new LogInScreen();
+            logInScreen.showWelcomeScreen();
         }
     },
 
     USERNAME {
         @Override
         public void output(Object o) {
-            System.out.println("Skriv ditt namn: ");
+            LogInScreen logInScreen = new LogInScreen();
+            logInScreen.showLogInScreen();
+        //    System.out.println("Skriv ditt namn: ");
 
         }
     },

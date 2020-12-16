@@ -13,6 +13,7 @@ public interface PersonDAO {
    Child getChild(String name);
    Caregiver getCaregiver(String name);
    Educator getEducator(String name);
+   Administrator getAdministrator(String name);
    List<Child> getChildList();
    List<Educator> getEducatorList();
    List<Caregiver> getCaregiverList();
