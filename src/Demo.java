@@ -286,9 +286,14 @@ public class Demo {
 
         Administrator administrator = new Administrator("Ivona", "Zoricic", "198307084445");
         administrator.setUsername("ivona.zoricic");
+        d.addAdministrator(administrator);
+        List<Administrator> administratorList = d.getAdministratorList();
+
+        System.out.println("Success");
 
         d.serialize(childrenList,"Children.ser");
         d.serialize(educatorList,"Educators.ser");
+        d.serialize(administratorList, "Admin.ser");
 
     }
 }

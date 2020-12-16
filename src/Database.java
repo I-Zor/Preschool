@@ -8,21 +8,22 @@ import java.util.List;
 public class Database implements AttendanceDAO, Serializable, PersonDAO, DatabaseDAO {
 
 
-    private final List<Child> childList;
-    private final List<Caregiver> caregiverList = new LinkedList<>();
-    private final List<Educator> educatorList;
-    private final List<Attendance> attendanceToday = new ArrayList<>();
-    private final List<List<Attendance>> attendanceList = new ArrayList<>();
-    private Administrator administrator;
+    private List<Child> childList = new ArrayList<>();
+    private List<Caregiver> caregiverList = new LinkedList<>();
+    private List<Educator> educatorList = new ArrayList<>();
+    private List<Attendance> attendanceToday = new ArrayList<>();
+    private List<List<Attendance>> attendanceList = new ArrayList<>();
+    private List<Administrator> administratorList;
 
-
-    public Database (){
-
+    public Database(){
         this.childList = deSerialize("Children.ser");
+    //    this.caregiverList = new ArrayList<>();
         this.educatorList = deSerialize("Educators.ser");
         findAndAddCAregiver();
         setAttendance();
+        this.administratorList = deSerialize("Admin.ser");
     }
+
 
     public void addChild(Child c) {
         this.childList.add(c);
@@ -65,6 +66,10 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         this.educatorList.remove(educator);
     }
 
+    public void addAdministrator(Administrator admin){
+        this.administratorList.add(admin);
+    }
+
     @Override
     public List<Child> getChildList() {
         return childList;
@@ -76,6 +81,10 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
 
     public List<Educator> getEducatorList() {
         return educatorList;
+    }
+
+    public List<Administrator> getAdministratorList(){
+        return administratorList;
     }
 
     @Override
@@ -145,12 +154,14 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     }
 
     @Override
-    public Administrator getAdministrator(String name) {
-        if (name.equals(administrator.getUsername()))
-            return administrator;
-        else
-            return null;
+    public Administrator getAdministrator(String name){
+        for (Administrator a : administratorList){
+            if (a.getUsername().equals(name))
+                return a;
+        }
+        return null;
     }
+
 
     @Override
     public void setAttendance() {

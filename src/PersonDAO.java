@@ -17,6 +17,7 @@ public interface PersonDAO {
    List<Child> getChildList();
    List<Educator> getEducatorList();
    List<Caregiver> getCaregiverList();
+   List<Administrator> getAdministratorList();
 
 
 }

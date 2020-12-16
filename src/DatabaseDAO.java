@@ -14,6 +14,7 @@ public interface DatabaseDAO {
     void deleteCaregiver(Caregiver caregiver);
     void addEducator(Educator educator);
     void deleteEducator(Educator educator);
+    void addAdministrator(Administrator admin);
     <T> List<T> deSerialize(String fileName);
     <T> void serialize(List <T> list, String fileName);
 

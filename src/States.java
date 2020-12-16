@@ -9,7 +9,7 @@ public enum States {
         @Override
         public void output(Object o) {
             LogInScreen logInScreen = new LogInScreen();
-            logInScreen.showWelcomeScreen();
+        //    logInScreen.showWelcomeScreen();
         }
     },
 
@@ -17,7 +17,7 @@ public enum States {
         @Override
         public void output(Object o) {
             LogInScreen logInScreen = new LogInScreen();
-            logInScreen.showLogInScreen();
+        //    logInScreen.showLogInScreen();
         //    System.out.println("Skriv ditt namn: ");
 
         }
