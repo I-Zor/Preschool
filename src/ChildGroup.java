@@ -53,4 +53,19 @@ public class ChildGroup implements Serializable {
     public void setNumberOfChildren(int numberOfChildren) {
         this.numberOfChildren = numberOfChildren;
     }
+
+    public String printEducators(){
+        for (Educator e : responsibleEducators){
+            return e.getFirstName() + " " + e.getLastName() + "\n";
+        }
+        return null;
+    }
+
+    public String printEducatorInfo(){
+        for (Educator e : responsibleEducators){
+            return e.getFirstName()+" "+e.getLastName()+"\n"+
+                    e.getPhoneNumber()+"n"+e.getEmailAddress()+"n";
+        }
+        return null;
+    }
 }

@@ -23,15 +23,17 @@ public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
     JLabel welcome = new JLabel();
     JLabel choose = new JLabel("Välj barn eller att ändra uppgifter");
     JButton changeData = new JButton("Ändra uppgifter");
+    JButton exit = new JButton("Logga ut");
     String name;
+    Caregiver caregiver;
 
 
     public WelcomeCaregiverScreen(String name) {
         this.name = name;
-        Caregiver caregiver = personDAO.getCaregiver(name);
+        caregiver = personDAO.getCaregiver(name);
 
         add(p);
-        p.setLayout(new GridLayout(5, 1));
+        p.setLayout(new GridLayout(6, 1));
         p.add(welcome);
         welcome.setText("Välkommen " + personDAO.getCaregiver(name).getFirstName());
         p.add(choose);
@@ -52,6 +54,15 @@ public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
             }
         });
 
+        p.add(exit);
+        exit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                LogInScreen ls = new LogInScreen();
+                dispose();
+            }
+        });
+
         setSize(500, 500);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -62,7 +73,7 @@ public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton child = (JButton) e.getSource();
-        ChildScreen cs = new ChildScreen(child.getText());
+        ChildScreen cs = new ChildScreen(child.getText(), caregiver);
         System.out.println("Next screen");
         dispose();
 
