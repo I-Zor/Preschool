@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Ivona Zoricic
@@ -8,35 +12,45 @@ import java.awt.*;
  * Project: Preschool_upgraded
  * Copywrite: MIT
  */
-public class WelcomeCaregiverScreen extends JFrame {
+public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
 
     protected Database d = new Database();
 
     protected PersonDAO personDAO = d;
-    protected AttendanceDAO attendanceDAO = d;
-    protected DatabaseDAO databaseDAO = d;
 
     JPanel p = new JPanel();
 
-
     JLabel welcome = new JLabel();
-    JLabel choose = new JLabel("Vad vill du göra?");
-    JRadioButton child = new JRadioButton("Barn");
-    JRadioButton changeData = new JRadioButton("Ändra uppgifter");
-    ButtonGroup bg = new ButtonGroup();
+    JLabel choose = new JLabel("Välj barn eller att ändra uppgifter");
+    JButton changeData = new JButton("Ändra uppgifter");
     String name;
 
-    public WelcomeCaregiverScreen(String name){
+
+    public WelcomeCaregiverScreen(String name) {
         this.name = name;
+        Caregiver caregiver = personDAO.getCaregiver(name);
 
         add(p);
-        p.setLayout(new GridLayout(5,1));
+        p.setLayout(new GridLayout(5, 1));
         p.add(welcome);
-        welcome.setText("Välkommen " +personDAO.getCaregiver(name).getFirstName());
+        welcome.setText("Välkommen " + personDAO.getCaregiver(name).getFirstName());
         p.add(choose);
-        p.add(child);
+
+        for (Child c : caregiver.getChildren()){
+            JButton child = new JButton(c.getFirstName());
+            child.addActionListener(this);
+            p.add(child);
+        }
+
         p.add(changeData);
-        bg.add(child); bg.add(changeData);
+        changeData.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                System.out.println("Data");
+                CaregiverDataScreen cds = new CaregiverDataScreen(caregiver);
+            }
+        });
 
         setSize(500, 500);
         setLocationRelativeTo(null);
@@ -45,4 +59,12 @@ public class WelcomeCaregiverScreen extends JFrame {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton child = (JButton) e.getSource();
+        ChildScreen cs = new ChildScreen(child.getText());
+        System.out.println("Next screen");
+        dispose();
+
+    }
 }
