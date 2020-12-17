@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Created by Ivona Zoricic
  * Date: 2020-12-17
@@ -5,7 +7,9 @@
  * Project: Preschool_upgraded
  * Copywrite: MIT
  */
-public class CaregiverDataScreen {
+public class CaregiverDataScreen extends JFrame {
+
+
 
     public CaregiverDataScreen(Caregiver caregiver) {
     }

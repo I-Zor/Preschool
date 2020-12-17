@@ -8,5 +8,9 @@
 public class WelcomeAdministratorScreen {
 
     public WelcomeAdministratorScreen(String name) {
+
+        //TODO: prijava novog djeteta i vårdnadshavare
+        //TODO: prijava nogo pedagoga
+        //TODO: *ändra pedagogers uppgifter*
     }
 }
