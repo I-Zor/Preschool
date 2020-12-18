@@ -28,6 +28,7 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
     JLabel question = new JLabel("Vilken dag vill du ändra?");
     JTextField inputDay = new JTextField(20);
     JLabel instruction = new JLabel();
+    JTextArea times = new JTextArea();
     JTextField newCaringTime = new JTextField(20);
     JButton end = new JButton("Slut");
 
@@ -38,6 +39,8 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
         p.setLayout(new GridLayout(7, 1));
         p.add(title);
         title.setText("Omsorgstider for " + child.getFirstName());
+        p.add(times);
+        times.setPreferredSize(new Dimension(50,100));
 
         showCaringTimes(child);
 
@@ -63,8 +66,7 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
 
     public void showCaringTimes(Child child) {
         for (CaringTime ct : child.getCaringTimes()) {
-            new JLabel(ct.getDay() + ": " + ct.getStart() + " - " + ct.getStop());
-            p.add(new JLabel(ct.getDay() + ": " + ct.getStart() + " - " + ct.getStop()));
+            times.append(ct.getDay() + ": " + ct.getStart() + " - " + ct.getStop()+"\n");
         }
     }
 

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Ivona Zoricic
@@ -19,21 +21,30 @@ public class LogInScreen extends JFrame implements ActionListener {
     protected DatabaseDAO databaseDAO = d;
 
 
-    JPanel welcomeScreen = new JPanel();
+    JPanel p = new JPanel();
     JLabel title = new JLabel("Välkommen till förskolan!");
     JLabel logIninput = new JLabel("Skriv ditt användarnamn");
     JTextField username = new JTextField(20);
     JLabel info = new JLabel();
+    JButton exit = new JButton("Sluta programmet");
 
     String name;
 
     public LogInScreen() {
-        add(welcomeScreen);
-        welcomeScreen.setLayout(new GridLayout(4, 1));
-        welcomeScreen.add(title);
-        welcomeScreen.add(logIninput);
-        welcomeScreen.add(username);
-        welcomeScreen.add(info);
+        add(p);
+        p.setLayout(new GridLayout(5, 1));
+        p.add(title);
+        p.add(logIninput);
+        p.add(username);
+        p.add(info);
+        p.add(exit);
+        exit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                saveAllFiles();
+            }
+        });
 
         username.addActionListener(this);
 
@@ -41,6 +52,14 @@ public class LogInScreen extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private void saveAllFiles() {
+        attendanceDAO.addAttendanceTodayInList(attendanceDAO.getAttendanceToday());
+        d.serialize(attendanceDAO.getAttendanceList(), SerFiles.LIST_OF_ATTENDANCES.serFiles);
+        d.serialize(attendanceDAO.getAttendanceToday(), SerFiles.ATTENDANCE.serFiles);
+        d.serialize(personDAO.getChildList(), SerFiles.CHILDREN.serFiles);
+        d.serialize(personDAO.getEducatorList(), SerFiles.EDUCATOR.serFiles);
     }
 
     @Override

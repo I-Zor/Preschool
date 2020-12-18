@@ -15,6 +15,8 @@ public interface DatabaseDAO {
     void addEducator(Educator educator);
     void deleteEducator(Educator educator);
     void addAdministrator(Administrator admin);
+    void addDepartments(ChildGroup group);
+    List<ChildGroup> getDepartments();
     <T> List<T> deSerialize(String fileName);
     <T> void serialize(List <T> list, String fileName);
 

@@ -28,4 +28,8 @@ public class Attendance implements Serializable {
     public LocalDate getDate() {
         return date;
     }
+
+    public Educator getEducatorForChild(Child c){
+        return c.getChildGroup().getResponsibleEducators().get(0);
+    }
 }

@@ -256,22 +256,28 @@ public class Demo {
         List<Educator> educatorList = d.getEducatorList();
 
         ChildGroup group1 = new ChildGroup("Humlan");
+        d.addDepartments(group1);
         group1.addEducatorToGroup(e1);
         group1.addEnrolledChild(b1);
         group1.addEnrolledChild(b2);
         group1.addEnrolledChild(b3);
+        e1.setChildGroup(group1);
 
         ChildGroup group2 = new ChildGroup("Fröet");
+        d.addDepartments(group2);
         group2.addEducatorToGroup(e2);
         group2.addEnrolledChild(b4);
         group2.addEnrolledChild(b5);
         group2.addEnrolledChild(b6);
+        e2.setChildGroup(group2);
 
         ChildGroup group3 = new ChildGroup("Nasselfjärillen");
+        d.addDepartments(group3);
         group3.addEducatorToGroup(e3);
         group3.addEnrolledChild(b7);
         group3.addEnrolledChild(b8);
         group3.addEnrolledChild(b9);
+        e3.setChildGroup(group3);
 
 
         b1.setChildGroup(group1);

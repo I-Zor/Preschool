@@ -12,6 +12,7 @@ public class Educator extends Person implements IContactInformation {
     private String postAddress;
     private String position;
     private String username;
+    private ChildGroup childGroup;
 
     Educator(String firstName, String lastName, String personalNumber) {
         super(firstName, lastName, personalNumber);
@@ -62,5 +63,13 @@ public class Educator extends Person implements IContactInformation {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public ChildGroup getChildGroup() {
+        return childGroup;
+    }
+
+    public void setChildGroup(ChildGroup childGroup) {
+        this.childGroup = childGroup;
     }
 }

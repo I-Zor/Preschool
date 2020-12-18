@@ -14,6 +14,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     private List<Attendance> attendanceToday = new ArrayList<>();
     private List<List<Attendance>> attendanceList = new ArrayList<>();
     private List<Administrator> administratorList;
+    private List<ChildGroup> departments = new ArrayList<>();
 
     public Database(){
         this.childList = deSerialize("Children.ser");
@@ -42,6 +43,16 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
             }
         }
     }
+
+    public List<ChildGroup> getDepartments() {
+        return departments;
+    }
+
+    public void addDepartments(ChildGroup group) {
+        departments.add(group);
+    }
+
+
 
     @Override
     public void deleteChild(Child child) {
@@ -199,4 +210,6 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     public List<List<Attendance>> getAttendanceList(){
         return attendanceList;
     }
+
+
 }
