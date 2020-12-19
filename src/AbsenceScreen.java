@@ -44,6 +44,8 @@ public class AbsenceScreen extends JFrame implements ActionListener {
         }
 
         p.add(result);
+        result.setPreferredSize(new Dimension(400,50));
+        result.setMaximumSize(new Dimension(400,50));
         p.add(exit);
         exit.addMouseListener(new MouseAdapter() {
             @Override

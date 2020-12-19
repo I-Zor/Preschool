@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,7 +26,9 @@ public class AttendanceScreen extends JFrame {
     List<Attendance> attendanceList;
     Educator educator;
 
-    JPanel p = new JPanel();
+    JPanel upper = new JPanel();
+    JPanel middle = new JPanel();
+    JPanel lower = new JPanel();
     JButton all = new JButton("Alla barn");
     JTextArea allChildren = new JTextArea();
     JButton attendant = new JButton("Närvarande barn");
@@ -42,9 +45,20 @@ public class AttendanceScreen extends JFrame {
         educator = group.getResponsibleEducators().get(0);
         System.out.println(educator.getFirstName());
 
-        add(p);
-        p.setLayout(new GridLayout(7, 1));
-        p.add(all);
+        add(upper);
+        upper.setLayout(new GridLayout(1,3));
+        upper.add(all);
+        upper.add(attendant);
+        upper.add(absent);
+
+        add(middle);
+        middle.setLayout(new GridLayout(1,3));
+        middle.add(allChildren);
+        middle.add(attendantChildren);
+        middle.add(absentChildren);
+
+        add(lower);
+        lower.add(exit);
 
         all.addMouseListener(new MouseAdapter() {
             @Override
@@ -54,42 +68,53 @@ public class AttendanceScreen extends JFrame {
             }
         });
 
-        p.add(allChildren);
-        allChildren.setPreferredSize(new Dimension(50, 100));
+    //    allChildren.setPreferredSize(new Dimension(50, 200));
 
-        p.add(attendant);
         attendant.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                attendantChildren.append("Närvarande " + LocalDate.now());
-                attendantChildren.append(printPresent());
+                attendantChildren.append("Närvarande " + LocalDate.now() + "\n");
+                printPresent();
             }
         });
 
-        p.add(attendantChildren);
-        attendantChildren.setPreferredSize(new Dimension(50, 100));
-        p.add(absent);
-        p.add(absentChildren);
-        absentChildren.setPreferredSize(new Dimension(50, 100));
-        p.add(exit);
+    //    attendantChildren.setPreferredSize(new Dimension(50, 200));
 
-        setSize(500, 500);
+        absent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                absentChildren.append("Frånvarande " + LocalDate.now());
+                printAbsent();
+            }
+        });
+    //    absentChildren.setPreferredSize(new Dimension(50, 200));
+
+        exit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+            }
+        });
+
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        Container contentPane = getContentPane();
+        contentPane.add(upper, BorderLayout.NORTH);
+        contentPane.add(middle, BorderLayout.CENTER);
+        contentPane.add(lower,BorderLayout.SOUTH);
 
     }
 
     //TODO: rijesiti izlistavanje närvaro!!!
 
-    private String printPresent() {
-        String result = "";
+    private void printPresent() {
         for (Attendance a : attendanceList) {
             if (a.getPresent())
-                result = a.getChild().getFirstName() + " " + a.getChild().getLastName() + "\n";
+                attendantChildren.append(a.getChild().getFirstName() + " " + a.getChild().getLastName() + "\n");
         }
-        return result;
     }
 
     private void printAllChildren() {
@@ -102,6 +127,15 @@ public class AttendanceScreen extends JFrame {
             allChildren.append(a.getChild().getFirstName() + " " + a.getChild().getLastName() +
                     " " + present + "\n");
         }
+
+    }
+
+    private void printAbsent(){
+        for (Attendance a : attendanceList) {
+            if (!a.getPresent())
+                absentChildren.append(a.getChild().getFirstName() + " " + a.getChild().getLastName());
+        }
+
 
     }
 

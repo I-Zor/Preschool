@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ public class LogInScreen extends JFrame implements ActionListener {
     JPanel p = new JPanel();
     JLabel title = new JLabel("Välkommen till förskolan!");
     JLabel logIninput = new JLabel("Skriv ditt användarnamn");
-    JTextField username = new JTextField(20);
+    JTextField username = new JTextField();
     JLabel info = new JLabel();
     JButton exit = new JButton("Sluta programmet");
 
@@ -32,12 +33,28 @@ public class LogInScreen extends JFrame implements ActionListener {
 
     public LogInScreen() {
         add(p);
-        p.setLayout(new GridLayout(5, 1));
+        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        p.setBorder(new EmptyBorder(50, 50, 50, 50));
+        //        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        //        util.setMainBackground(panel);
+        //        panel.add(Box.createRigidArea(new Dimension(100, 80)));
+        //        panel
         p.add(title);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(500,100)));
         p.add(logIninput);
+        logIninput.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(500,30)));
         p.add(username);
+        username.setAlignmentX(Component.CENTER_ALIGNMENT);
+        username.setPreferredSize(new Dimension(200,30));
+        username.setMaximumSize(new Dimension(200,20));
+        p.add(Box.createRigidArea(new Dimension(500,30)));
         p.add(info);
+        info.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(500,200)));
         p.add(exit);
+        exit.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -48,7 +65,7 @@ public class LogInScreen extends JFrame implements ActionListener {
 
         username.addActionListener(this);
 
-        setSize(500, 500);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -60,6 +77,8 @@ public class LogInScreen extends JFrame implements ActionListener {
         d.serialize(attendanceDAO.getAttendanceToday(), SerFiles.ATTENDANCE.serFiles);
         d.serialize(personDAO.getChildList(), SerFiles.CHILDREN.serFiles);
         d.serialize(personDAO.getEducatorList(), SerFiles.EDUCATOR.serFiles);
+        d.serialize(personDAO.getAdministratorList(), "Admin.ser");
+        d.serialize(databaseDAO.getDepartments(),"Departments.ser");
     }
 
     @Override

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,27 +31,84 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
     JLabel instruction = new JLabel();
     JTextArea times = new JTextArea();
     JTextField newCaringTime = new JTextField(20);
-    JButton end = new JButton("Slut");
+    JButton save = new JButton("Spara");
+    JButton end = new JButton("Tillbaka till startsidan");
 
     public CaringTimeScreen(Child child) {
         this.child = child;
 
         add(p);
-        p.setLayout(new GridLayout(7, 1));
+        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        p.setBorder(new EmptyBorder(50, 50, 50, 50));
+
         p.add(title);
         title.setText("Omsorgstider for " + child.getFirstName());
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
         p.add(times);
-        times.setPreferredSize(new Dimension(50,100));
+        times.setEditable(false);
+        times.setPreferredSize(new Dimension(200,100));
+        times.setMaximumSize(new Dimension(200,100));
+        times.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
 
         showCaringTimes(child);
 
         p.add(question);
+        question.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
         p.add(inputDay);
+        inputDay.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputDay.setPreferredSize(new Dimension(200,50));
+        inputDay.setMaximumSize(new Dimension(200,50));
         inputDay.addActionListener(this);
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
         p.add(instruction);
+        instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
         p.add(newCaringTime);
-        newCaringTime.addActionListener(this);
+        newCaringTime.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newCaringTime.setPreferredSize(new Dimension(200,50));
+        newCaringTime.setMaximumSize(new Dimension(200,50));
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
+        p.add(save);
+        save.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
+        save.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String day = inputDay.getText();
+                if (day.equals("måndag"))
+                    createCaringTime(0, child, day);
+                else if (day.equals("tisdag"))
+                    createCaringTime(1, child, day);
+                else if (day.equals("onsdag"))
+                    createCaringTime(2, child, day);
+                else if (day.equals("torsdag"))
+                    createCaringTime(3, child, day);
+                else if (day.equals("fredag"))
+                    createCaringTime(4, child, day);
+                System.out.println("Sparad");
+                inputDay.setText("");
+            }
+        });
+
         p.add(end);
+        end.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,30)));
+
+
         end.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -58,7 +116,7 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
             }
         });
 
-        pack();
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -87,20 +145,6 @@ public class CaringTimeScreen extends JFrame implements ActionListener {
             } else {
                 instruction.setText("Var god skriv dagen igen: ");
             }
-
-        }
-        if (e.getSource() == newCaringTime) {
-            String day = inputDay.getText();
-            if (day.equals("måndag"))
-                createCaringTime(0, child, day);
-            else if (day.equals("tisdag"))
-                createCaringTime(1, child, day);
-            else if (day.equals("onsdag"))
-                createCaringTime(2, child, day);
-            else if (day.equals("torsdag"))
-                createCaringTime(3, child, day);
-            else if (day.equals("fredag"))
-                createCaringTime(4, child, day);
         }
     }
 

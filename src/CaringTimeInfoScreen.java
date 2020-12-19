@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,18 +36,33 @@ public class CaringTimeInfoScreen extends JFrame implements ActionListener {
         childList = group.getEnrolledChildren();
 
         add(p);
-        p.setLayout(new GridLayout(4, 1));
+        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         p.add(choose);
+        choose.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(Box.createRigidArea(new Dimension(100,10)));
 
         for (Child c : childList) {
             JButton button = new JButton(c.getFirstName() + " " + c.getLastName());
             button.addActionListener(this);
             p.add(button);
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.setPreferredSize(new Dimension(200,50));
+            button.setMaximumSize(new Dimension(200,50));
         }
 
         p.add(info);
-        info.setPreferredSize(new Dimension(50,100));
+        info.setAlignmentX(Component.CENTER_ALIGNMENT);
+        info.setPreferredSize(new Dimension(200,100));
+        info.setMaximumSize(new Dimension(200,100));
+        p.add(Box.createRigidArea(new Dimension(100,10)));
+
         p.add(clean);
+        clean.setPreferredSize(new Dimension(200,50));
+        clean.setMaximumSize(new Dimension(200,50));
+
+        clean.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         clean.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -54,8 +70,14 @@ public class CaringTimeInfoScreen extends JFrame implements ActionListener {
                 info.replaceSelection("");
             }
         });
+        p.add(Box.createRigidArea(new Dimension(400,10)));
 
         p.add(exit);
+        exit.setPreferredSize(new Dimension(200,50));
+        exit.setMaximumSize(new Dimension(200,50));
+
+        exit.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

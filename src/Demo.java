@@ -279,6 +279,8 @@ public class Demo {
         group3.addEnrolledChild(b9);
         e3.setChildGroup(group3);
 
+        List<ChildGroup> departments = d.getDepartments();
+
 
         b1.setChildGroup(group1);
         b2.setChildGroup(group1);
@@ -300,6 +302,7 @@ public class Demo {
         d.serialize(childrenList,"Children.ser");
         d.serialize(educatorList,"Educators.ser");
         d.serialize(administratorList, "Admin.ser");
+        d.serialize(departments, "Departments.ser");
 
     }
 }

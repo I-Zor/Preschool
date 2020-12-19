@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +21,6 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
     protected PersonDAO personDAO = d;
 
     JPanel p = new JPanel();
-
-    JLabel label;
 
     JLabel welcome = new JLabel();
     JLabel choose = new JLabel("Välj mellan alternativerna");
@@ -52,11 +51,22 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
         children = group.getEnrolledChildren();
 
         add(p);
-        p.setLayout(new GridLayout(11, 1));
+        p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        p.setBorder(new EmptyBorder(50, 50, 50, 50));
+
         p.add(welcome);
+        welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
         welcome.setText("Välkommen " + educator.getFirstName());
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(choose);
+        choose.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(absence);
+        absence.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         absence.addMouseListener(new MouseAdapter() {
             @Override
@@ -65,7 +75,11 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
             }
         });
 
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(attendance);
+        attendance.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         attendance.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -73,15 +87,28 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
             }
         });
 
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(caringTime);
+        caringTime.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         caringTime.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 CaringTimeInfoScreen info = new CaringTimeInfoScreen(group);
             }
         });
+        p.add(Box.createRigidArea(new Dimension(500,10)));
 
         p.add(caregiver);
+        caregiver.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
+        p.add(questionCareg);
+        questionCareg.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
         caregiver.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -89,28 +116,58 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
             }
         });
 
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(answerCaregiver);
+        answerCaregiver.setAlignmentX(Component.CENTER_ALIGNMENT);
+        answerCaregiver.setPreferredSize(new Dimension(200,50));
+        answerCaregiver.setMaximumSize(new Dimension(200,50));
+
         answerCaregiver.addActionListener(this);
 
-        p.add(questionCareg);
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(caregiverInfo);
-        caregiverInfo.setPreferredSize(new Dimension(50,50));
+        caregiverInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        caregiverInfo.setPreferredSize(new Dimension(200,50));
+        caregiverInfo.setMaximumSize(new Dimension(200,50));
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(relative);
+        relative.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
+
         p.add(questionRelative);
+        questionRelative.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         relative.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 questionRelative.setText("Vilket barn?");
             }
         });
+        p.add(Box.createRigidArea(new Dimension(500,10)));
 
         p.add(answerRelative);
+        answerRelative.setPreferredSize(new Dimension(400,50));
+        answerRelative.setMaximumSize(new Dimension(400,50));
+
+        answerRelative.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         answerRelative.addActionListener(this);
+        p.add(Box.createRigidArea(new Dimension(500,10)));
 
         p.add(relativeInfo);
-        relativeInfo.setPreferredSize(new Dimension(50,50));
+        relativeInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        relativeInfo.setPreferredSize(new Dimension(400,50));
+        relativeInfo.setMaximumSize(new Dimension(400,50));
+
+        p.add(Box.createRigidArea(new Dimension(500,10)));
 
         p.add(exit);
+        exit.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -118,8 +175,11 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
                 LogInScreen ls = new LogInScreen();
             }
         });
+        p.add(Box.createRigidArea(new Dimension(500,10)));
 
         p.add(clean);
+        clean.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         clean.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -132,7 +192,7 @@ public class WelcomeEducatorScreen extends JFrame implements ActionListener {
             }
         });
 
-        setSize(500, 500);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

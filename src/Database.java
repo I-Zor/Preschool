@@ -23,6 +23,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         findAndAddCAregiver();
         setAttendance();
         this.administratorList = deSerialize("Admin.ser");
+        this.departments = deSerialize("Departments.ser");
     }
 
 
