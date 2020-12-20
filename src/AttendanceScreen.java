@@ -41,7 +41,10 @@ public class AttendanceScreen extends JFrame {
     public AttendanceScreen(ChildGroup group) {
         this.group = group;
         childList = group.getEnrolledChildren();
-        attendanceList = attendanceDAO.getAttendanceToday();
+        attendanceList = d.deSerialize("Attendance.ser");
+        for (Attendance a: attendanceList){
+            System.out.println(a.getPresent());
+        }
         educator = group.getResponsibleEducators().get(0);
         System.out.println(educator.getFirstName());
 
@@ -107,8 +110,6 @@ public class AttendanceScreen extends JFrame {
         contentPane.add(lower,BorderLayout.SOUTH);
 
     }
-
-    //TODO: rijesiti izlistavanje närvaro!!!
 
     private void printPresent() {
         for (Attendance a : attendanceList) {

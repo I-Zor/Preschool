@@ -70,7 +70,7 @@ public class AbsenceScreen extends JFrame implements ActionListener {
         Child c = personDAO.getChild(firstName);
         result.setText("Frånvaro registrerad för " + child.getText());
         attendanceDAO.addAbsence(c);
-        System.out.println("Added absence in AbsenceScreen");
+        System.out.println("AbsenceScreen: attendanceDAO.addAbsence()");
         d.serialize(attendanceDAO.getAttendanceToday(), SerFiles.ATTENDANCE.serFiles);
 
     }

@@ -22,8 +22,8 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         this.educatorList = deSerialize("Educators.ser");
     //    findAndAddCAregiver();
         this.caregiverList = deSerialize("Caregivers.ser");
-        this.attendanceToday = deSerialize("AttendanceToday.ser");
-    //    setAttendance();
+    //    this.attendanceToday = deSerialize("AttendanceToday.ser");
+        setAttendance();
         this.administratorList = deSerialize("Admin.ser");
         this.departments = deSerialize("Departments.ser");
     }
@@ -188,7 +188,10 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     public void addAbsence(Child child) {
         for(Attendance a: getAttendanceToday()){
             if(a.getChild()==child) {
+                System.out.println("Database: public void addAbsence()");
                 a.setPresent(false);
+                System.out.println(a.getPresent());
+                serialize(getAttendanceToday(), "Attendance.ser");
                 break;
             }
         }
@@ -197,7 +200,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     @Override
     public void addChildInAttendance(Child child) {
         attendanceToday.add(new Attendance(child));
-        System.out.println("Added child to attendanceToday.list");
+        System.out.println("Database: addChildInAttendance()");
     }
 
     @Override
@@ -208,7 +211,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     @Override
     public void addAttendanceTodayInList(List<Attendance> attendanceToday){
         attendanceList.add(attendanceToday);
-        System.out.println("Added attendanceToday in attendanceTodayList");
+        System.out.println("Database:addAttendanceTodayInList()");
     }
 
     @Override

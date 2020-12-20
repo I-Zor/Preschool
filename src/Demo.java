@@ -185,6 +185,19 @@ public class Demo {
         b8.addCaregiver(c9);
         b9.addCaregiver(c10);
 
+    /*    d.addChildInAttendance(b1);
+        d.addChildInAttendance(b2);
+        d.addChildInAttendance(b3);
+        d.addChildInAttendance(b4);
+        d.addChildInAttendance(b5);
+        d.addChildInAttendance(b6);
+        d.addChildInAttendance(b7);
+        d.addChildInAttendance(b8);
+        d.addChildInAttendance(b9);
+
+        List<Attendance> attendanceList = d.getAttendanceToday();*/
+
+
 
         Relative r1 = new Relative("Johanna","Eriksson");
         r1.addCloseChild(b1);
@@ -308,6 +321,7 @@ public class Demo {
         d.serialize(administratorList, "Admin.ser");
         d.serialize(departments, "Departments.ser");
         d.serialize(caregiverList, "Caregivers.ser");
+    //    d.serialize(attendanceList, "AttendanceToday.ser");
 
         System.out.println("Success");
 
