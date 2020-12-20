@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface PersonDAO {
 
-   String getContactInformation(IContactInformation person);
    Child getChild(String name);
    Caregiver getCaregiver(String name);
    Educator getEducator(String name);

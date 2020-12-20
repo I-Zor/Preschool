@@ -1,32 +1,23 @@
-import javax.xml.crypto.Data;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by Lisa Ramel
- * Date: 2020-12-04
- * Time: 16:27
- * Project: Preeschool
- * Copywrite: MIT
- */
 public enum States {
 
     LOGIN {
         @Override
         public void output(Object o) {
-            System.out.println("Välkommen till förskolan!" + "\nLOGGA IN SOM"
-                    + "\n 1. Vårdnadshavare" + "\n 2. Pedagog" + "\n 3. Administratör" + "\n 4.Avsluta programmet");
+            System.out.println("Välkommen till förskolan!" +
+                    "\n 1. Logga in med användarnamn" +
+                    "\n 2. Avsluta programmet");
         }
     },
 
     USERNAME {
         @Override
         public void output(Object o) {
-            System.out.println("Skriv ditt namn: ");
-
+            System.out.println("Skriv ditt användarnamn: ");
         }
     },
 
@@ -336,7 +327,9 @@ public enum States {
             System.out.println("Programmet avslutas");
         }
 
-    }, RELATED_INFO_PRINT {
+    },
+
+    RELATED_INFO_PRINT {
         @Override
         public void output(Object o) {
             Child child = (Child) o;
@@ -344,6 +337,7 @@ public enum States {
             System.out.println();
             for (RelatedPerson person : relatedPeople) {
                 System.out.println(person.getFirstName() + " " + person.getSecondName() +
+                        "\n" + person.getRelationWithChild() +
                         "\n" + person.getPhoneNumber() +
                         "\n" + person.geteMailAddress());
             }

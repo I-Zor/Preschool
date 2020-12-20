@@ -2,13 +2,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ivona Zoricic
- * Date: 2020-12-20
- * Time: 16:11
- * Project: Preschool_upgraded
- * Copywrite: MIT
- */
 public class RelatedPerson implements Serializable {
     private String firstName;
     private String secondName;

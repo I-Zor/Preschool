@@ -8,9 +8,9 @@ import java.util.List;
 public class Database implements AttendanceDAO, Serializable, PersonDAO, DatabaseDAO {
 
 
-    private List<Child> childList = new LinkedList<>();
+    private List<Child> childList;
     private List<Caregiver> caregiverList = new LinkedList<>();
-    private List<Educator> educatorList = new LinkedList<>();
+    private List<Educator> educatorList;
     private List<Attendance> attendanceToday = new ArrayList<>();
     private List<List<Attendance>> attendanceList = new ArrayList<>();
     private List<Administrator> administratorList;
@@ -19,13 +19,10 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     public Database (){
 
         this.childList = deSerialize("Children.ser");
-        //this.caregiverList = deSerialize("Caregivers.ser");
         this.educatorList = deSerialize("Educators.ser");
         this.administratorList = deSerialize("Admin.ser");
         findAndAddCAregiver();
         setAttendance();
-
-
 
     }
 
@@ -115,17 +112,6 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         return list;
     }
 
-
-    @Override
-    public String getContactInformation(IContactInformation person) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("E-mejladress: " + person.getEmailAddress() + '\n');
-        sb.append("Telefonnummer: " + person.getPhoneNumber() + '\n');
-        sb.append("Postadress: " + person.getPostAddress());
-
-        return sb.toString();
-    }
-
     @Override
     public Child getChild(String name) {
         for(Child c : childList){
@@ -138,17 +124,16 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
 
     public Caregiver getCaregiver(String name){
         for (Caregiver c: caregiverList){
-            if(c.getFirstName().equalsIgnoreCase(name) || c.getLastName().equalsIgnoreCase(name)){
+            if(c.getUsername().equalsIgnoreCase(name))
                 return c;
             }
-        }
         return null;
     }
 
     @Override
     public Educator getEducator(String name) {
         for(Educator e: educatorList){
-            if(e.getFirstName().equalsIgnoreCase(name) || e.getLastName().equalsIgnoreCase(name)){
+            if(e.getUsername().equalsIgnoreCase(name)){
                 return e;
             }
         }
@@ -158,7 +143,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     @Override
     public Administrator getAdministrator(String name){
         for (Administrator a : administratorList) {
-            if (a.getFirstName().equalsIgnoreCase(name) || a.getLastName().equalsIgnoreCase(name)) {
+            if (a.getUsername().equalsIgnoreCase(name)) {
                 return a;
             }
         }

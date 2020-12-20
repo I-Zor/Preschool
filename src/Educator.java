@@ -1,28 +1,20 @@
-import java.io.Serializable;
-
-/**
- * Created by Sara Carlsson
- * Date: 30/11/2020
- * Time:20:39
- * Project: Preeschool
- * Copywright: MIT
- */
 public class Educator extends Person implements IContactInformation {
 
     private String eMailAddress;
     private String phoneNumber;
     private String postAddress;
+    private String username;
 
     Educator(String firstName, String lastName, String personalNumber) {
         super(firstName, lastName, personalNumber);
     }
 
-    public void addAbsence(){
-
+    public String getUsername() {
+        return username;
     }
 
-    public void registerNewChild(){
-
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

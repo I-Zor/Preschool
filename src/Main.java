@@ -13,9 +13,9 @@ public class Main {
 
     private final Database d = new Database();
 
-    private AttendanceDAO attendanceDAO = d;
-    private DatabaseDAO databaseDAO = d;
-    private PersonDAO personDAO = d;
+    protected AttendanceDAO attendanceDAO = d;
+    protected DatabaseDAO databaseDAO = d;
+    protected PersonDAO personDAO = d;
 
     private Scanner scan = new Scanner(System.in);
 
@@ -24,38 +24,48 @@ public class Main {
 
     public Main() throws InterruptedException {
         state = States.LOGIN;
-
-
-        state = States.LOGIN;
         state.output(null);
 
         int input = scan.nextInt();
-
+        String username;
 
         while (true) {
             if (input == 1) {
                 Thread.sleep(1000);
-                caregiverView(input);
-                state = States.LOGIN;
+                state = States.USERNAME;
                 state.output(null);
-                input = scan.nextInt();
-                //break;
+                username = scan.next();
+
+                    if (personDAO.getCaregiver(username) != null) {
+                        Thread.sleep(1000);
+                        caregiverView(input);
+                        state = States.LOGIN;
+                        state.output(null);
+                        input = scan.nextInt();
+
+
+                    } else if (personDAO.getEducator(username) != null) {
+                        Thread.sleep(1000);
+                        educatorView(input);
+                        state = States.LOGIN;
+                        state.output(null);
+                        input = scan.nextInt();
+
+
+                    } else if (personDAO.getAdministrator(username) != null) {
+                        Thread.sleep(1000);
+                        administratorView(input);
+                        state = States.LOGIN;
+                        state.output(null);
+                        input = scan.nextInt();
+
+
+                    } else{
+                        System.out.println("Var god försök igen");
+
+                }
+
             } else if (input == 2) {
-                Thread.sleep(1000);
-                educatorView(input);
-                state = States.LOGIN;
-                state.output(null);
-                input = scan.nextInt();
-                //break;
-            }
-            else if (input == 3) {
-                Thread.sleep(1000);
-                administratorView(input);
-                state = States.LOGIN;
-                state.output(null);
-                input = scan.nextInt();
-            }
-            else if (input == 4) {
                 state = States.SHUT_DOWN;
                 state.output(null);
                 saveAllFiles();
@@ -64,28 +74,50 @@ public class Main {
                 System.out.println("Ogiltigt kommando, var god försök igen.");
                 input = scan.nextInt();
             }
+
         }
     }
+
+
+    /*    while (true) {
+
+            if (personDAO.getCaregiver(username) != null) {
+                Thread.sleep(1000);
+                caregiverView(input);
+                state = States.LOGIN;
+                state.output(null);
+                input = scan.nextInt();
+
+
+            } else if (personDAO.getEducator(username) != null) {
+                Thread.sleep(1000);
+                educatorView(input);
+                state = States.LOGIN;
+                state.output(null);
+                input = scan.nextInt();
+
+            } else if (personDAO.getAdministrator(username) != null) {
+                Thread.sleep(1000);
+                administratorView(input);
+                state = States.LOGIN;
+                state.output(null);
+                input = scan.nextInt();
+            } else
+                System.out.println("Var god försök igen");
+        }*/
+
 
     private void administratorView(int input) throws InterruptedException {
         String name;
         String firstName;
-        state = States.USERNAME;
         state.output(null);
         name = scan.next();
-        System.out.println(name);
-        Administrator administrator = personDAO.getAdministrator(name);
 
-        while (administrator == null){
-            System.out.println("Var god försök igen: ");
-            name = scan.next();
-            administrator = personDAO.getAdministrator(name);
-        }
+        Administrator administrator = personDAO.getAdministrator(name);
 
         while (true){
             state = States.ADMINISTRATOR;
             state.output(administrator);
-            System.out.println(administrator.getFirstName());
 
             input = scan.nextInt();
 
@@ -133,6 +165,7 @@ public class Main {
                 Thread.sleep(1000);
                 state = States.LOG_OUT;
                 state.output(administrator);
+
                 break;
             }
 
@@ -149,15 +182,9 @@ public class Main {
         String name;
         //Om användaren valde att logga in som vårdnadshavare (1)
 
-        state = States.USERNAME;
         state.output(null);
         name = scan.next();
         Caregiver caregiver = personDAO.getCaregiver(name);
-        while (caregiver == null) {
-            System.out.println("Var god försök igen: ");
-            name = scan.next();
-            caregiver = personDAO.getCaregiver(name);
-        }
         while (true) {
             Child child;
             child = caregiver.getChildren().get(0);
@@ -216,6 +243,8 @@ public class Main {
                 Thread.sleep(1000);
                 state = States.LOG_OUT;
                 state.output(caregiver);
+
+
                 break;
             }
 
@@ -231,20 +260,13 @@ public class Main {
     public void educatorView(int input) throws InterruptedException {
 
         String name;
-        String firstName;
 
         //Om användaren valde att logga in som pedagog (2)
 
-        state = States.USERNAME;
         state.output(null);
 
         name = scan.next();
         Educator educator = personDAO.getEducator(name);
-        while (educator == null) {
-            System.out.println("Var god försök igen: ");
-            name = scan.next();
-            educator = personDAO.getEducator(name);
-        }
 
         while (true) {
 
@@ -336,6 +358,7 @@ public class Main {
             else if (input == 6) {
                 state = States.LOG_OUT;
                 state.output(educator);
+
                 break;
 
             } else {
