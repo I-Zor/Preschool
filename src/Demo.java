@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -95,6 +93,37 @@ public class Demo {
         b4.addCaregiver(c4);
         b5.addCaregiver(c4);
 
+        RelatedPerson r1 = new RelatedPerson("Johanna","Eriksson");
+        r1.addRelatedChild(b1);
+        r1.setPhoneNumber("0738585858");
+        r1.seteMailAddress("johanna.eriksson@gmail.com");
+        r1.setRelationWithChild("Mormor");
+        b1.addRelatedPerson(r1);
+
+        RelatedPerson r2 = new RelatedPerson("Lena","Johansson");
+        r2.addRelatedChild(b2);
+        r2.setPhoneNumber("07335253525");
+        r2.seteMailAddress("lena.johansson@gmail.com");
+        r2.setRelationWithChild("Farmor");
+        b2.addRelatedPerson(r2);
+
+        RelatedPerson r3 = new RelatedPerson("Astrid","Andersson");
+        r3.addRelatedChild(b3);
+        r3.setPhoneNumber("073444444");
+        r3.seteMailAddress("astrid.andersson@gmail.com");
+        r3.setRelationWithChild("Moster");
+        b3.addRelatedPerson(r3);
+
+        RelatedPerson r4 = new RelatedPerson("Noelia","Nilsson");
+        r4.addRelatedChild(b4);
+        r4.setPhoneNumber("0735555556");
+        r4.seteMailAddress("noelia.nilsson@gmail.com");
+        r4.setRelationWithChild("Faster");
+        r4.addRelatedChild(b5);
+        b4.addRelatedPerson(r4);
+        b5.addRelatedPerson(r4);
+
+
         Educator e = new Educator("Kristina","Eriksson","97807075564");
         d.addEducator(e);
         e.setEmailAddress("kristina.eriksson@gmail.com");
@@ -102,11 +131,17 @@ public class Demo {
         e.setPostAddress("Stockholm");
         List<Educator> educatorList = d.getEducatorList();
 
+        Administrator administrator = new Administrator("Ivona", "Zoricic", "198307084445");
+        d.addAdministrator(administrator);
+        List<Administrator> administratorList = d.getAdministratorList();
+
+
 
 
         //d.serialize(caregiverList,"Caregivers.ser");
         d.serialize(childrenList,"Children.ser");
         d.serialize(educatorList,"Educators.ser");
+        d.serialize(administratorList, "Admin.ser");
 
 
         /*

@@ -18,7 +18,7 @@ public enum States {
         @Override
         public void output(Object o) {
             System.out.println("Välkommen till förskolan!" + "\nLOGGA IN SOM"
-                    + "\n 1. Vårdnadshavare" + "\n 2. Pedagog" + "\n 3. Avsluta programmet");
+                    + "\n 1. Vårdnadshavare" + "\n 2. Pedagog" + "\n 3. Administratör" + "\n 4.Avsluta programmet");
         }
     },
 
@@ -134,10 +134,10 @@ public enum States {
             System.out.println();
             System.out.println("\nVälkommen " + educator.getFirstName() + "!" +
                     "\n 1. Ange frånvaro" +
-                    "\n 2. Registrera ett nytt barn till förskolan" +
-                    "\n 3. Se närvaro idag" +
-                    "\n 4. Se ett barns omsorgstider " +
-                    "\n 5. Se vårdnadshavares kontaktuppgifter" +
+                    "\n 2. Se närvaro idag" +
+                    "\n 3. Se ett barns omsorgstider " +
+                    "\n 4. Se vårdnadshavares kontaktuppgifter" +
+                    "\n 5. Se närståendes kontaktuppgifter" +
                     "\n 6. Logga ut");
         }
     },
@@ -336,7 +336,29 @@ public enum States {
             System.out.println("Programmet avslutas");
         }
 
+    }, RELATED_INFO_PRINT {
+        @Override
+        public void output(Object o) {
+            Child child = (Child) o;
+            List<RelatedPerson> relatedPeople = child.getRelatedPerson();
+            System.out.println();
+            for (RelatedPerson person : relatedPeople) {
+                System.out.println(person.getFirstName() + " " + person.getSecondName() +
+                        "\n" + person.getPhoneNumber() +
+                        "\n" + person.geteMailAddress());
+            }
+        }
+    }, ADMINISTRATOR{
+        @Override
+        public void output(Object o) {
+            Administrator admin = (Administrator) o;
+            System.out.println();
+            System.out.println("Välkommen " + admin.getFirstName() +
+                    "\n 1. Registrera barn" + "\n 2. Logga ut");
+        }
+
     };
+
 
     public abstract void output(Object o);
 

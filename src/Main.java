@@ -21,21 +21,6 @@ public class Main {
 
     private States state;
 
-/*
-1. Välj Vårdnadshavare eller Pedagog ex (1,2)
-
-Vårdnadshavare
-1. Välj barn
-1. Registerara frånvaro
-2. Anmäla omsorgstider
-3. Visa pedagogers uppgifter
-
-Pedagog
-1. Lägga till frånvaro
-2. Registrera nytt barn
-
- */
-
 
     public Main() throws InterruptedException {
         state = States.LOGIN;
@@ -62,7 +47,15 @@ Pedagog
                 state.output(null);
                 input = scan.nextInt();
                 //break;
-            } else if (input == 3) {
+            }
+            else if (input == 3) {
+                Thread.sleep(1000);
+                administratorView(input);
+                state = States.LOGIN;
+                state.output(null);
+                input = scan.nextInt();
+            }
+            else if (input == 4) {
                 state = States.SHUT_DOWN;
                 state.output(null);
                 saveAllFiles();
@@ -73,6 +66,83 @@ Pedagog
             }
         }
     }
+
+    private void administratorView(int input) throws InterruptedException {
+        String name;
+        String firstName;
+        state = States.USERNAME;
+        state.output(null);
+        name = scan.next();
+        System.out.println(name);
+        Administrator administrator = personDAO.getAdministrator(name);
+
+        while (administrator == null){
+            System.out.println("Var god försök igen: ");
+            name = scan.next();
+            administrator = personDAO.getAdministrator(name);
+        }
+
+        while (true){
+            state = States.ADMINISTRATOR;
+            state.output(administrator);
+            System.out.println(administrator.getFirstName());
+
+            input = scan.nextInt();
+
+            if (input == 1) {
+
+                Thread.sleep(1000);
+                state = States.REGISTER_CHILD;
+                state.output(null);
+                firstName = scan.next();
+
+                boolean foundCaregiver = false;
+
+                //Om vårdnadshavaren redan finns i systemet, läggs
+                //ett nytt barn läggs till till den redan exsisterande vårdnadshavaren
+                for (Caregiver caregiver : personDAO.getCaregiverList()) {
+                    if (caregiver.getFirstName().equalsIgnoreCase(firstName)) {
+                        System.out.println("Det nya barnet kommer att registreras på den redan " +
+                                "\nexisterande vårdnadshavaren " + caregiver.getFirstName() + " " + caregiver.getLastName());
+
+                        Child child = state.registerNewChild(scan);
+                        databaseDAO.addChild(child);
+                        child.addCaregiver(caregiver);
+                        caregiver.addChildren(child);
+                        attendanceDAO.addChildInAttendance(child);
+                        foundCaregiver = true;
+                    }
+                }
+
+                //Om det är en ny vårdnadshavare så adderas en ny vårdnadshavare
+                //och ett nytt barn läggs till och kopplas till den nya vårdnadshavaren
+                if (!foundCaregiver) {
+
+                    Caregiver caregiver = state.addCaregiverToNewChild(scan, firstName);
+                    databaseDAO.addCaregiver(caregiver);
+                    Child child = state.registerNewChild(scan);
+                    databaseDAO.addChild(child);
+                    child.addCaregiver(caregiver);
+                    caregiver.addChildren(child);
+                    attendanceDAO.addChildInAttendance(child);
+                }
+                saveAllFiles();
+
+            }
+            if (input == 2){
+                Thread.sleep(1000);
+                state = States.LOG_OUT;
+                state.output(administrator);
+                break;
+            }
+
+            else {
+                System.out.println("Okänt kommando, var god försök igen.");
+
+            }
+
+            }
+        }
 
 
     public void caregiverView(int input) throws InterruptedException {
@@ -200,51 +270,10 @@ Pedagog
                     Child child = childList.get(input - 1);
                     addAbsenseToday(child);
                 }
-
-
-                //Om användaren vill lägga till ett barn
-            } else if (input == 2) {
-
-                Thread.sleep(1000);
-                state = States.REGISTER_CHILD;
-                state.output(null);
-                firstName = scan.next();
-
-                boolean foundCaregiver = false;
-
-                //Om vårdnadshavaren redan finns i systemet, läggs
-                //ett nytt barn läggs till till den redan exsisterande vårdnadshavaren
-                for (Caregiver caregiver : personDAO.getCaregiverList()) {
-                    if (caregiver.getFirstName().equalsIgnoreCase(firstName)) {
-                        System.out.println("Det nya barnet kommer att registreras på den redan " +
-                                "\nexisterande vårdnadshavaren " + caregiver.getFirstName() + " " + caregiver.getLastName());
-
-                        Child child = state.registerNewChild(scan);
-                        databaseDAO.addChild(child);
-                        child.addCaregiver(caregiver);
-                        caregiver.addChildren(child);
-                        attendanceDAO.addChildInAttendance(child);
-                        foundCaregiver = true;
-                    }
-                }
-
-                //Om det är en ny vårdnadshavare så adderas en ny vårdnadshavare
-                //och ett nytt barn läggs till och kopplas till den nya vårdnadshavaren
-                if (!foundCaregiver) {
-
-                    Caregiver caregiver = state.addCaregiverToNewChild(scan, firstName);
-                    databaseDAO.addCaregiver(caregiver);
-                    Child child = state.registerNewChild(scan);
-                    databaseDAO.addChild(child);
-                    child.addCaregiver(caregiver);
-                    caregiver.addChildren(child);
-                    attendanceDAO.addChildInAttendance(child);
-                }
-                saveAllFiles();
-
             }
+
             //Om användaren vill skriva ut närvarolistor
-            else if (input == 3) {
+            else if (input == 2) {
               
                 Thread.sleep(1000);
                 state = States.ATTENDANCE;
@@ -266,7 +295,7 @@ Pedagog
             }
 
             // om användaren vill se ett barns omsorgstider
-            else if(input == 4){
+            else if(input == 3){
                 state = States.SEE_CARINGTIMES;
                 state.output(personDAO.getChildList());
                 input = scan.nextInt();
@@ -274,7 +303,7 @@ Pedagog
 
             }
 
-            else if (input == 5) {
+            else if (input == 4) {
                 state = States.CAREGIVER_INFO;
                 state.output(null);
 
@@ -288,7 +317,21 @@ Pedagog
                 }
             }
 
-            //Om användaren valde att Logga ut (5)
+            else if (input == 5) {
+                state = States.CAREGIVER_INFO;
+                state.output(null);
+
+                name = scan.next();
+                List<Child> childList = personDAO.getChildList();
+                for (Child child : childList) {
+                    if (name.equalsIgnoreCase(child.getFirstName()) || name.equalsIgnoreCase(child.getLastName())) {
+                        state = States.RELATED_INFO_PRINT;
+                        state.output(child);
+                    }
+                }
+            }
+
+            //Om användaren valde att Logga ut (6)
 
             else if (input == 6) {
                 state = States.LOG_OUT;

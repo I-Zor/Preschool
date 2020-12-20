@@ -9,13 +9,14 @@ import java.util.List;
  */
 public interface PersonDAO {
 
-   public String getContactInformation(IContactInformation person);
-   public Child getChild(String name);
-   public Caregiver getCaregiver(String name);
-   public Educator getEducator(String name);
+   String getContactInformation(IContactInformation person);
+   Child getChild(String name);
+   Caregiver getCaregiver(String name);
+   Educator getEducator(String name);
+   Administrator getAdministrator(String name);
    List<Child> getChildList();
    List<Educator> getEducatorList();
    List<Caregiver> getCaregiverList();
-
+   List<Administrator> getAdministratorList();
 
 }

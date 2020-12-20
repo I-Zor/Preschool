@@ -13,6 +13,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     private List<Educator> educatorList = new LinkedList<>();
     private List<Attendance> attendanceToday = new ArrayList<>();
     private List<List<Attendance>> attendanceList = new ArrayList<>();
+    private List<Administrator> administratorList;
 
 
     public Database (){
@@ -20,6 +21,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         this.childList = deSerialize("Children.ser");
         //this.caregiverList = deSerialize("Caregivers.ser");
         this.educatorList = deSerialize("Educators.ser");
+        this.administratorList = deSerialize("Admin.ser");
         findAndAddCAregiver();
         setAttendance();
 
@@ -75,6 +77,11 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
 
     public List<Caregiver> getCaregiverList() {
         return caregiverList;
+    }
+
+    @Override
+    public List<Administrator> getAdministratorList() {
+        return administratorList;
     }
 
     public List<Educator> getEducatorList() {
@@ -149,6 +156,16 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     }
 
     @Override
+    public Administrator getAdministrator(String name){
+        for (Administrator a : administratorList) {
+            if (a.getFirstName().equalsIgnoreCase(name) || a.getLastName().equalsIgnoreCase(name)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void setAttendance() {
         for(Child c : getChildList()) {
             this.attendanceToday.add(new Attendance(c));
@@ -184,4 +201,9 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     public List<List<Attendance>> getAttendanceList(){
         return attendanceList;
     }
+
+    public void addAdministrator(Administrator admin){
+        this.administratorList.add(admin);
+    }
+
 }
