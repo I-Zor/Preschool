@@ -26,6 +26,7 @@ public class Demo {
 
         d.addCaregiver(c1);d.addCaregiver(c2);d.addCaregiver(c3);d.addCaregiver(c4);d.addCaregiver(c5);
         d.addCaregiver(c6);d.addCaregiver(c7);d.addCaregiver(c8);d.addCaregiver(c9);d.addCaregiver(c10);
+        List<Caregiver> caregiverList = d.getCaregiverList();
 
         c1.setEmailAddress("anna.andersson@gmail.com");
         c1.setPhoneNumber("070 222 333 44");
@@ -184,6 +185,7 @@ public class Demo {
         b8.addCaregiver(c9);
         b9.addCaregiver(c10);
 
+
         Relative r1 = new Relative("Johanna","Eriksson");
         r1.addCloseChild(b1);
         r1.addCloseChild(b6);
@@ -297,12 +299,17 @@ public class Demo {
         d.addAdministrator(administrator);
         List<Administrator> administratorList = d.getAdministratorList();
 
-        System.out.println("Success");
+
+
+
 
         d.serialize(childrenList,"Children.ser");
         d.serialize(educatorList,"Educators.ser");
         d.serialize(administratorList, "Admin.ser");
         d.serialize(departments, "Departments.ser");
+        d.serialize(caregiverList, "Caregivers.ser");
+
+        System.out.println("Success");
 
     }
 }

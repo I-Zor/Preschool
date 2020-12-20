@@ -37,7 +37,7 @@ public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
         p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
         p.setBorder(new EmptyBorder(50, 50, 50, 50));
         p.add(welcome);
-        p.add(Box.createRigidArea(new Dimension(500,50)));
+        p.add(Box.createRigidArea(new Dimension(500,100)));
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
         welcome.setText("Välkommen " + personDAO.getCaregiver(name).getFirstName());
         p.add(Box.createRigidArea(new Dimension(500,50)));
@@ -54,7 +54,8 @@ public class WelcomeCaregiverScreen extends JFrame implements ActionListener{
             p.add(child);
         }
 
-        p.add(Box.createRigidArea(new Dimension(500,50)));
+
+
         p.add(exit);
         exit.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.setPreferredSize(new Dimension(200,50));

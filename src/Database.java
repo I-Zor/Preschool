@@ -20,8 +20,10 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
         this.childList = deSerialize("Children.ser");
     //    this.caregiverList = new ArrayList<>();
         this.educatorList = deSerialize("Educators.ser");
-        findAndAddCAregiver();
-        setAttendance();
+    //    findAndAddCAregiver();
+        this.caregiverList = deSerialize("Caregivers.ser");
+        this.attendanceToday = deSerialize("AttendanceToday.ser");
+    //    setAttendance();
         this.administratorList = deSerialize("Admin.ser");
         this.departments = deSerialize("Departments.ser");
     }
@@ -32,7 +34,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     }
 
 
-    public void findAndAddCAregiver(){
+ /*   public void findAndAddCAregiver(){
         for (Child child: childList){
             caregiverList.addAll(child.getCaregivers());
         }
@@ -43,7 +45,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
                 }
             }
         }
-    }
+    }*/
 
     public List<ChildGroup> getDepartments() {
         return departments;
@@ -195,6 +197,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     @Override
     public void addChildInAttendance(Child child) {
         attendanceToday.add(new Attendance(child));
+        System.out.println("Added child to attendanceToday.list");
     }
 
     @Override
@@ -205,6 +208,7 @@ public class Database implements AttendanceDAO, Serializable, PersonDAO, Databas
     @Override
     public void addAttendanceTodayInList(List<Attendance> attendanceToday){
         attendanceList.add(attendanceToday);
+        System.out.println("Added attendanceToday in attendanceTodayList");
     }
 
     @Override
